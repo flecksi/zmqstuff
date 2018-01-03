@@ -9,7 +9,7 @@ N_MSG_PLOT     = 1000 # print one line after a certain amount of msgs received
 context = zmq.Context()
 
 SUB_socket = context.socket(zmq.SUB)
-SUB_socket.connect("tcp://localhost:1235")
+SUB_socket.connect("tcp://127.0.0.1:1235")
 SUB_socket.setsockopt_string(zmq.SUBSCRIBE, "") # subscribe to all msgs (no filter)
 
 T_last_plot	= 0
@@ -17,7 +17,7 @@ n_msgs		= 0
 bytes_msgs	= 0
 
 while True:
-	sub_msg = SUB_socket.recv_string() # blocking call
+	sub_msg = SUB_socket.recv() # blocking call
 	n_msgs += 1
 	bytes_msgs += len(sub_msg)
 	if n_msgs > N_MSG_PLOT:
